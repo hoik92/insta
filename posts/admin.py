@@ -4,4 +4,4 @@ from .models import Post
 # Register your models here.
 
 
-admin.site.resiter(Post)
+admin.site.register(Post)
