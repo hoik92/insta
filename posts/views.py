@@ -8,7 +8,7 @@ from .models import Post
 def create(request):
     if request.method == 'POST':
         # 작성된 post를 DB에 적용
-        form = PostModelForm(request.POST)
+        form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('posts:list')
