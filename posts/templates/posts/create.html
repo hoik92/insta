@@ -7,6 +7,10 @@
   {% csrf_token %}
   <!-- 모델 폼 -->
   {% bootstrap_form form %}
-  <button type="submit" class="btn btn-primary">업로드</button>
+  {% if 'create' in request.path %}
+    <button type="submit" class="btn btn-primary">업로드</button>
+  {% else %}
+    <button type="submit" class="btn btn-primary">수정</button>
+  {% endif %}
 </form>
 {% endblock %}
