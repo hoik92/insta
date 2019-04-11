@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostModelForm
 from .models import Post
 
@@ -32,7 +32,7 @@ def delete(request, post_id):
 
 
 def update(request, post_id):
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
         form = PostModelForm(request.POST, instance=post)
         if form.is_valid():
