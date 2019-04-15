@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['insta-hoik92.c9users.io']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
