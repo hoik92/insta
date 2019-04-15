@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 # urlpatterns += static(통과시키고자 하는 url, 실제 저장 장소)
