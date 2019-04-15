@@ -50,3 +50,17 @@ def update(request, post_id):
     else:
         form = PostModelForm(instance=post)
         return render(request, 'posts/create.html', {'form': form})
+        
+        
+def like(request, post_id):
+    # 1. like를 추가할 포스트를 가져옴
+    post = get_object_or_404(Post, id=post_id)
+    # 2. 만약 유저가 해당 post를 이미 like 했다면
+    #   like를 제거하고
+    # 아니면
+    #   like를 추가한다.
+    if request.user in post.like_users.all():
+        post.like_users.remove(request.user)
+    else:
+        post.like_users.add(request.user)
+    return redirect('posts:list')
