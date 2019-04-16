@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostModelForm
-from .models import Post
+from .forms import PostModelForm, CommentForm
+from .models import Post, Comment
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -25,7 +26,8 @@ def create(request):
 def list(request):
     # 모든 Post를 보여줌
     posts = Post.objects.all()
-    return render(request, 'posts/list.html', {'posts': posts})
+    form = CommentForm()
+    return render(request, 'posts/list.html', {'posts': posts, 'form': form})
     
     
 def delete(request, post_id):
@@ -68,3 +70,24 @@ def like(request, post_id):
     else:
         post.like_users.add(request.user)
     return redirect('posts:list')
+    
+
+@login_required
+@require_POST
+def comment_create(request, post_id):
+    form = CommentForm(request.POST)
+    post = get_object_or_404(Post, id=post_id)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.user = request.user
+        comment.save()
+    return redirect('posts:list')
+    
+    
+def comment_delete(request, post_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('posts:list')
+        
