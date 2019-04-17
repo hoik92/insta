@@ -4,6 +4,8 @@
   <div class="container">
     <h1>{{ person.username }}</h1>
     <p>{{ person.last_name }}{{ person.first_name }}</p>
+    <p><strong>{{ person.profile.nickname }}</strong></p>
+    <p>{{ person.profile.description }}</p>
     {% if user == person %}
       <a class="btn btn-info" href="{% url 'accounts:update' %}">회원 정보 수정</a>
       <a class="btn btn-danger" href="{% url 'accounts:password' %}">password</a>

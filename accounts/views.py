@@ -3,7 +3,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model, update_session_auth_hash
-from .forms import CustomUserChangeForm
+from .forms import CustomUserChangeForm, ProfileForm
+from .models import Profile
 
 # Create your views here.
 
@@ -33,6 +34,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            Profile.objects.create(user=user)
             auth_login(request, user)
             return redirect('posts:list')
         return redirect('accounts:signup')
@@ -55,13 +57,19 @@ def people(request, username):
 def update(request):
     if request.method == "POST":
         user_change_form = CustomUserChangeForm(request.POST, instance=request.user)
-        if user_change_form.is_valid():
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_change_form.is_valid() and profile_form.is_valid():
             user = user_change_form.save()
+            profile_form.save()
             return redirect('people', user.username)
     else:
         user_change_form = CustomUserChangeForm(instance=request.user)
+        # 1. instance 넣어줄 정보가 있는 User가 있고 없는 User도 있다.
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        profile_form = ProfileForm(instance=profile)
         context = {
             'user_change_form': user_change_form,
+            'profile_form': profile_form,
         }
         return render(request, 'accounts/update.html', context)
         
