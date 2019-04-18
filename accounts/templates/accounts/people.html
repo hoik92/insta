@@ -2,7 +2,21 @@
 
 {% block body %}
   <div class="container">
-    <h1>{{ person.username }}</h1>
+    <h1>{{ person.username }}
+      {% if user != person %}
+        <!-- 만약 현재 접속한 유저가 해당 페이지의 유저를 팔로우 한 경우 -->
+        {% if user in person.followers.all %}
+          <a class="btn btn-outline-primary ml-3" href="{% url 'accounts:follow' person.id %}">
+            언팔로우
+          </a>
+        {% else %}
+          <a class="btn btn-primary ml-3" href="{% url 'accounts:follow' person.id %}">
+            팔로우
+          </a>
+        {% endif %}
+      {% endif %}
+    </h1>
+    <p>팔로워 : {{ person.followers.count }}명</p>
     <p>{{ person.last_name }}{{ person.first_name }}</p>
     <p><strong>{{ person.profile.nickname }}</strong></p>
     <p>{{ person.profile.description }}</p>

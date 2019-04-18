@@ -3,6 +3,7 @@ from .forms import PostModelForm, CommentForm
 from .models import Post, Comment
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.db.models.query_utils import Q
 
 # Create your views here.
 
@@ -24,8 +25,13 @@ def create(request):
         
         
 def list(request):
-    # 모든 Post를 보여줌
-    posts = Post.objects.all()
+    # 1. 내가 팔로우한 사람들의 Post를 보여줌
+    posts = Post.objects.filter(Q(user_id__in=request.user.follows.all()) | Q(user=request.user))
+    print(posts.query)
+    # 2. (1) + 내가 작성한 Post를 보여줌
+    # my_posts = request.user.post_set.all()
+    # posts.union(my_posts)
+    # print(my_posts.query)
     form = CommentForm()
     return render(request, 'posts/list.html', {'posts': posts, 'form': form})
     
