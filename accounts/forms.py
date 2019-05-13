@@ -17,5 +17,24 @@ class ProfileForm(forms.ModelForm):
         
         
 class CustomUserCreationForm(UserCreationForm):
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            "placeholder": "사용자 이름",
+        })
+    )
+    password1 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            "placeholder": "비밀번호",
+        }),
+    )
+    password2 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            "placeholder": "비밀번호 확인",
+        }),
+    )
+    
     class Meta(UserCreationForm.Meta):
         model = get_user_model()

@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light py-3">
   <a class="navbar-brand" href="{% url 'posts:list' %}">
     <i class="fab fa-instagram"></i>
-    Instagram
+    <span id="title">Instagram</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -11,23 +11,20 @@
       <!-- 만약 로그인이 되어있으면 -->
       {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'people' user.username %}" tabindex="-1" aria-disabled="true">{{ user.username }}</a>
+        <a class="nav-link" href="{% url 'posts:create' %}"><i class="far fa-edit"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'posts:create' %}">New</a>
+        <a class="nav-link" href="{% url 'people' user.username %}" tabindex="-1" aria-disabled="true"><i class="far fa-user"></i></a>
       </li>
       <!-- 아니면 -->
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
       </li>
-      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
       </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

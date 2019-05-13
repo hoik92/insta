@@ -3,10 +3,28 @@
 {% load bootstrap4 %}
 
 {% block body %}
-  <h1 class="text-center">회원가입</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary">회원가입</button>
-  </form>
+  <div class="row my-5">
+    <div class="col-4 offset-2">
+      .
+    </div>
+    <div class="col-4 signup">
+      <div class="signup-box">
+        <h1 class="text-center mb-4" id="title">Instagram</h1>
+        <form method="POST">
+          <div>
+            <h5 class="text-center" id="signup-comment">친구들의 사진과 동영상을 보려면 가입하세요.</h5>
+          </div>
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <button type="submit" class="btn btn-primary col-12 mb-3">회원가입</button>
+        </form>
+        <p class="agreement">
+          가입하면 Instagram의 <strong>약관</strong>, <strong>데이터 정책</strong> 및 <strong>쿠키 정책</strong>에 동의하게 됩니다.
+        </p>
+      </div>
+      <div class="login-box">
+        <p class="mb-0">계정이 있으신가요? <a href="{% url 'accounts:login' %}" class="text-decoration-none">로그인</a></p>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,76 @@
+body {
+    background-color: #f4f4f4;
+}
+
+/* Navbar */
+nav {
+    border-bottom: 1px solid #c5c5c5;
+    background-color: white;
+}
+
+.far {
+    font-size: 20px;
+}
+
+/* signup */
+#title {
+    font-family: 'Pacifico', cursive;
+}
+
+#signup-comment {
+    color: gray;
+    font-weight: bold;
+}
+
+.signup {
+    padding: 0;
+}
+
+.signup-box {
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #c5c5c5;
+}
+
+.agreement {
+    text-align: center;
+    font-size: 13px;
+    color: gray;
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    margin: 10px 0 0 0;
+    border: 1px solid #c5c5c5;
+}
+
+/* people */
+.simple-description {
+    list-style: none;
+    margin-right: 40px;
+}
+
+.profile {
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #c5c5c5;
+}
+
+.fa-sun {
+    color: #626262;
+    font-size: 30px;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.profile-modal-btn {
+    display: block;
+    text-align: center;
+    padding: 4px 8px;
+    border-bottom: 0.25px solid #e5e5e5;
+}
+
+/* profile_edit */

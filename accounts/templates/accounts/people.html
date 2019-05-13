@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <div class="container">
-    <div class="row mb-5">
+  <div class="container my-5">
+    <div class="row profile">
       <div class="col-4 d-flex">
         <div class="col-12 d-flex justify-content-center align-items-center">
           <img src={% if person.profile.image %}"{{ person.profile.image.url }}"{% else %}"https://i.stack.imgur.com/34AD2.jpg"{% endif %} width="150rem" style="border-radius: 50%; image-size: contain;" alt="">
         </div>
       </div>
       <div class="col-8">
-        <h1>{{ person.username }}
+        <h2>{{ person.username }}
           {% if user != person %}
             <!-- 만약 현재 접속한 유저가 해당 페이지의 유저를 팔로우 한 경우 -->
             {% if user in person.followers.all %}
@@ -21,17 +21,38 @@
                 팔로우
               </a>
             {% endif %}
+          {% else %}
+            <a class="btn btn-outline-info ml-3" href="{% url 'accounts:update' %}">프로필 편집</a>
+            <button type="button" class="btn" data-toggle="modal" data-target="#ProfileModal"><i class="far fa-sun"></i></button>
+            <div class="modal fade" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <a class="profile-modal-btn" href="{% url 'accounts:password' %}"><button class="btn">비밀번호 변경</button></a>
+                    <a class="profile-modal-btn" href="{% url 'accounts:logout' %}"><button class="btn">로그아웃</button></a>
+                    <a class="profile-modal-btn" href="{% url 'accounts:delete' %}"><button class="btn">회원 탈퇴</button></a>
+                    <a class="profile-modal-btn"><button class="btn" data-dismiss="modal">취소</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
           {% endif %}
-        </h1>
-        <p>팔로워 : {{ person.followers.count }}명</p>
-        <p>{{ person.last_name }}{{ person.first_name }}</p>
-        <p><strong>{{ person.profile.nickname }}</strong></p>
-        <p>{{ person.profile.description }}</p>
-        {% if user == person %}
-          <a class="btn btn-info" href="{% url 'accounts:update' %}">회원 정보 수정</a>
-          <a class="btn btn-danger" href="{% url 'accounts:password' %}">password</a>
-          <a class="btn btn-danger" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
-        {% endif %}
+        </h2>
+        <ul class="list-group list-group-horizontal mt-3">
+          <li class="simple-description">
+            <span>게시물 <strong>{{ person.post_set.count }}</strong></span>
+          </li>
+          <li class="simple-description">
+            <span>팔로워 <strong>{{ person.followers.count }}</strong></span>
+          </li>
+          <li class="simple-description">
+            <span>팔로우 <strong>{{ person.follows.count }}</strong></span>
+          </li>
+        </ul>
+        <div class="mt-3">
+          <span><strong class="mr-3">{{ person.last_name }} {{ person.first_name }}</strong>{{ person.profile.nickname }}</span><br>
+          <span>{{ person.profile.description }}</span>
+        </div>
       </div>
     </div>
     
