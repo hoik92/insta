@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model, update_session_auth_hash
 from .forms import CustomUserChangeForm, ProfileForm, CustomUserCreationForm
 from .models import Profile
 
+from django.http import JsonResponse
+
 # Create your views here.
 
 
@@ -109,3 +111,33 @@ def follow(request, user_id):
         # 팔로우
             person.followers.add(request.user)
     return redirect('people', person.username)
+    
+    
+def vue_follow(request, user_id):
+    person = get_object_or_404(get_user_model(), id=user_id)
+    
+    if request.user != person:
+    # 현재 유저가 해당 유저를 팔로우하고 있었으면
+        if request.user in person.followers.all():
+        # 언팔로우
+            person.followers.remove(request.user)
+            followed = False
+        # 아니면
+        else:
+        # 팔로우
+            person.followers.add(request.user)
+            followed = True
+    return JsonResponse({'followed': followed})
+    
+    
+def check_follow(request, user_id):
+    person = get_object_or_404(get_user_model(), id=user_id)
+    
+    if request.user != person:
+        # 현재 유저가 해당 유저를 팔로우하고 있었으면
+        if request.user in person.followers.all():
+            followed = True
+        # 아니면
+        else:
+            followed = False
+    return JsonResponse({'followed': followed})

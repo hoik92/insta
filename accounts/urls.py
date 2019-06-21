@@ -12,4 +12,7 @@ urlpatterns = [
     path('password/', views.password, name="password"),
     
     path('<int:user_id>/follow/', views.follow, name="follow"),
+    
+    path('<int:user_id>/vuefollow/', views.vue_follow),
+    path('<int:user_id>/checkfollow/', views.check_follow),
 ]
